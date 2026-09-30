@@ -5,7 +5,7 @@ Nama tabel, grain, dan measure di bawah **tidak boleh diganti** tanpa kabar di g
 Menambah atribut boleh.
 
 > Status: **DRAF.** Final kalau 1 jam setelah dikirim tidak ada yang keberatan.
-> Sudah dicocokkan dengan `LembarFakta.txt`. Daftar komoditas & jenis pasar lengkap: lihat `LembarFaktaTambahan.txt`.
+> Sudah dicocokkan dengan `LembarFakta.txt` dan `LembarFaktaTambahan.txt`.
 
 ## 0. Fakta struktur data yang WAJIB diketahui semua anggota
 
@@ -14,6 +14,12 @@ Menambah atribut boleh.
 - Format **WIDE**: kolom `Date_Param` (tanggal, tersimpan sebagai teks) + **34 kolom provinsi** berisi harga.
 - **Komoditas dan jenis pasar TIDAK ada sebagai kolom**, hanya di nama file.
 - Folder sumber bernama `Cleaned_After_Imputation` → data sudah diimputasi oleh pengunggah.
+- **10 komoditas:** bawang_merah, bawang_putih, beras, cabai_merah, cabai_rawit, daging_ayam, daging_sapi, gula_pasir, minyak_goreng, telur_ayam.
+- **3 jenis pasar:** tradisional, modern, produsen (masing-masing 10 file, folder terpisah).
+- Baris per file: modern & produsen 1.493; tradisional 1.415–1.417 (lebih sedikit tanggal).
+- Nilai kosong = **provinsi tidak ada di file tertentu** (0 sel kosong di dalam file). Paling parah di produsen: bawang_putih 2 provinsi, gula_pasir 14, minyak_goreng 15; DKI Jakarta tanpa data produsen.
+- Setelah unpivot: **1.354.641 baris** harga, 0 duplikat → ini jumlah baris `fact_harga_harian`.
+- **2.187 kandidat outlier.** Contoh: gula_pasir modern Kalimantan Selatan Rp605.500 (28 Mei–4 Jun 2024), median Rp16.700.
 - Jadi ETL wajib: unpivot provinsi → baris, ambil komoditas & jenis pasar dari nama file, ubah `Date_Param` jadi tanggal.
 
 ## 1. Pertanyaan bisnis (acuan semua bagian)
@@ -25,7 +31,7 @@ Menambah atribut boleh.
 | Q3 | Bagaimana tren harga bulanan tiap komoditas? | `avg_harga` per bulan |
 | Q4 | Berapa kenaikan harga menjelang Idulfitri (H-30 s/d H-1) dibanding rata-rata bulan biasa? | `pct_kenaikan_lebaran` |
 | Q5 | Berapa kesenjangan harga antarprovinsi untuk tiap komoditas? | `disparitas_harga` = maks − min antarprovinsi |
-| Q6 | Berapa selisih harga dari tingkat produsen ke pasar konsumen untuk tiap komoditas dan provinsi? | `selisih_produsen_konsumen` = harga pasar − harga produsen |
+| Q6 | Berapa selisih harga dari tingkat produsen ke pasar konsumen untuk tiap komoditas dan provinsi? | `selisih_produsen_konsumen` = harga pasar − harga produsen. Hanya untuk provinsi yang punya data produsen (bawang putih cuma 2 provinsi) |
 
 ## 2. Desain Data Warehouse (Kimball)
 
@@ -36,8 +42,8 @@ Menambah atribut boleh.
 |---|---|
 | `fact_harga_harian` | `tanggal_key`, `komoditas_key`, `jenis_pasar_key`, `provinsi_key`, `harga` (Rp) |
 | `dim_tanggal` | `tanggal_key`, `tanggal`, `hari`, `minggu`, `bulan`, `nama_bulan`, `kuartal`, `tahun`, `is_ramadan`, `hari_ke_lebaran` |
-| `dim_komoditas` | `komoditas_key`, `nama_komoditas`, `satuan` |
-| `dim_jenis_pasar` | `jenis_pasar_key`, `nama_jenis_pasar` (nilai dari nama file, lihat Lembar Fakta Tambahan) |
+| `dim_komoditas` | `komoditas_key`, `nama_komoditas` (10 nilai di atas), `satuan` |
+| `dim_jenis_pasar` | `jenis_pasar_key`, `nama_jenis_pasar` (tradisional / modern / produsen), `tingkat` (konsumen / produsen) |
 | `dim_provinsi` | `provinsi_key`, `nama_provinsi` (34 nama persis seperti header kolom), `pulau`/`wilayah` |
 
 - `avg_harga`, `cv_harga`, `pct_kenaikan_lebaran`, `disparitas_harga`, `selisih_produsen_konsumen` adalah **measure turunan** (dihitung di dashboard), bukan kolom di tabel fakta.
