@@ -50,6 +50,29 @@ Menambah atribut boleh.
 - Satuan harga (per kg/liter) **tidak tercantum di data** → tulis [PERLU DICEK], cek halaman Kaggle/PIHPS.
 - Statistik bagian 7 di LembarFakta.txt **mencampur semua komoditas** → jangan dipakai untuk analisis; pakai bagian F di LembarFaktaTambahan.txt.
 
+## 2b. Visual dashboard minimum (Ikhsan) — 1 pertanyaan = 1 visual
+
+| Kode | Visual |
+|---|---|
+| Q1 | Bar chart horizontal: peringkat provinsi menurut `avg_harga` |
+| Q2 | Bar chart: `cv_harga` per komoditas |
+| Q3 | Line chart: tren `avg_harga` bulanan per komoditas |
+| Q4 | Line chart harga harian dengan penanda periode Ramadan–Idulfitri + kartu KPI `pct_kenaikan_lebaran` |
+| Q5 | Bar chart: `disparitas_harga` per komoditas |
+| Q6 | Grouped bar: harga produsen vs pasar tradisional vs pasar modern per komoditas |
+
+Filter global: komoditas, jenis pasar, provinsi, periode. Boleh tambah visual, jangan kurangi.
+
+## 2c. Langkah ETL minimum (Hanif) — semuanya berasal dari Lembar Fakta
+
+1. Extract 30 file CSV dari 3 folder jenis pasar.
+2. Ambil `komoditas` dan `jenis_pasar` dari nama file.
+3. Unpivot 34 kolom provinsi menjadi baris (`provinsi`, `harga`) → 1.354.641 baris.
+4. Ubah `Date_Param` dari teks menjadi tanggal; buat `dim_tanggal` (termasuk penanda Ramadan/Idulfitri).
+5. Provinsi yang tidak ada di suatu file **tidak diisi** (tidak ada baris), bukan diisi 0.
+6. Tandai 2.187 kandidat outlier (> Q3 + 3×IQR per komoditas × jenis pasar); nilai jelas salah seperti gula pasir modern Kalimantan Selatan Rp605.500 dikeluarkan/dikoreksi.
+7. Buat surrogate key, load dimensi dulu, lalu `fact_harga_harian`.
+
 ## 3. Penulisan
 
 - Tulis langsung di Google Docs, di heading masing-masing.

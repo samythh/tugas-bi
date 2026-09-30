@@ -16,9 +16,11 @@ Tanda `[PERLU DICEK]` = jangan dikumpulkan sebelum dihapus/diganti.
 
 ---
 
-## A. ABSTRAK  *(ditulis TERAKHIR, setelah bagian Ikhsan & Hanif masuk)*
+## A. ABSTRAK
 
-Harga pangan strategis di Indonesia berubah setiap hari, berbeda antarprovinsi, dan berbeda antara tingkat produsen dan pasar konsumen, sehingga pengambil keputusan membutuhkan informasi ringkas untuk memantau kenaikan, fluktuasi, dan kesenjangan harga. Tugas ini bertujuan merancang solusi *Business Intelligence* yang menjawab enam pertanyaan bisnis tentang perbandingan harga antarprovinsi, fluktuasi komoditas, tren bulanan, kenaikan harga menjelang Idulfitri, kesenjangan antarwilayah, dan selisih harga produsen–konsumen. Data yang digunakan berasal dari Pusat Informasi Harga Pangan Strategis (PIHPS) Nasional Bank Indonesia yang dihimpun di Kaggle, terdiri atas 30 file harga harian untuk 10 komoditas pada tiga tingkat harga (pasar tradisional, pasar modern, dan produsen) di 34 provinsi, periode 1 Januari 2022 sampai 12 Februari 2026. Metode yang digunakan meliputi analisis kelayakan data, analisis kebutuhan informasi, perancangan proses ETL, perancangan *data warehouse* dengan pendekatan dimensional Kimball, dan perancangan *dashboard*. Hasilnya berupa skema bintang dengan tabel fakta `fact_harga_harian` pada grain harga per komoditas, jenis pasar, provinsi, dan tanggal; rancangan ETL yang mengubah data berformat lebar menjadi 1.354.641 baris fakta; serta rancangan *dashboard* yang menampilkan {{2–3 visual utama dari bagian Ikhsan}}.
+Harga pangan strategis di Indonesia berubah setiap hari, berbeda antarprovinsi, dan berbeda antara tingkat produsen dan pasar konsumen, sehingga pengambil keputusan membutuhkan informasi yang ringkas untuk memantau kenaikan, fluktuasi, dan kesenjangan harga. Tugas ini bertujuan merancang solusi *Business Intelligence* yang menjawab enam pertanyaan bisnis, yaitu perbandingan harga antarprovinsi, fluktuasi harga komoditas, tren harga bulanan, kenaikan harga menjelang Idulfitri, kesenjangan harga antarwilayah, serta selisih harga dari produsen ke konsumen. Data yang digunakan berasal dari Pusat Informasi Harga Pangan Strategis (PIHPS) Nasional Bank Indonesia yang dihimpun di Kaggle, terdiri atas 30 file harga harian untuk 10 komoditas pada tiga jenis pasar (pasar tradisional, pasar modern, dan produsen) di 34 provinsi, periode 1 Januari 2022 sampai 12 Februari 2026. Metode yang digunakan meliputi analisis kelayakan data dengan *script* Python, analisis kebutuhan informasi, perancangan proses ETL, perancangan *data warehouse* dengan pendekatan dimensional Kimball, dan perancangan *dashboard*. Hasil analisis data menunjukkan bahwa data layak digunakan, dengan catatan berupa format data lebar, cakupan provinsi yang tidak seragam terutama pada tingkat produsen, serta 2.187 nilai ekstrem. Hasil perancangan berupa proses ETL yang mengubah data berformat lebar menjadi 1.354.641 baris fakta sekaligus menandai nilai ekstrem, skema bintang dengan tabel fakta `fact_harga_harian` pada grain harga per komoditas, jenis pasar, provinsi, dan tanggal beserta empat tabel dimensi (tanggal, komoditas, jenis pasar, dan provinsi), serta rancangan *dashboard* yang menampilkan peringkat harga antarprovinsi, tingkat fluktuasi komoditas, tren bulanan, kenaikan harga menjelang Idulfitri, dan perbandingan harga produsen dengan harga pasar.
+
+**Kata kunci:** *business intelligence*, *data warehouse*, Kimball, ETL, harga pangan, PIHPS
 
 ---
 
@@ -36,9 +38,17 @@ Kelompok juga mencatat beberapa keterbatasan. (1) Dataset diunggah oleh pengguna
 
 ---
 
-## 2. KESIMPULAN  *(ditulis TERAKHIR)*
+## 2. KESIMPULAN
 
-Dataset harga pangan strategis PIHPS yang terdiri atas 30 file harga harian di 34 provinsi dinilai layak digunakan sebagai dasar perancangan solusi *Business Intelligence*, dengan catatan kualitas berupa {{2 masalah data utama}}. Analisis kebutuhan informasi menghasilkan enam pertanyaan bisnis yang berfokus pada perbandingan harga antarprovinsi, fluktuasi komoditas, tren bulanan, kenaikan harga menjelang Idulfitri, kesenjangan antarwilayah, dan selisih harga produsen–konsumen. Kebutuhan tersebut dipenuhi dengan *data warehouse* berbentuk skema bintang pada grain harga per komoditas, jenis pasar, provinsi, dan tanggal, yang diisi melalui proses ETL untuk {{sebut aturan transformasi utama dari Hanif}}. Rancangan *dashboard* menyajikan {{visual utama dari Ikhsan}} sehingga pengguna dapat {{keputusan yang dibantu, dari tabel kebutuhan informasi Ikhsan}}. Pengembangan selanjutnya dapat berupa implementasi ETL secara nyata dan penambahan data pendukung seperti inflasi atau jumlah penduduk per provinsi.
+Berdasarkan analisis dan perancangan yang dilakukan, kelompok menyimpulkan beberapa hal berikut.
+
+1. Dataset harga pangan strategis PIHPS yang terdiri atas 30 file harga harian untuk 10 komoditas, tiga jenis pasar, dan 34 provinsi selama periode 1 Januari 2022 sampai 12 Februari 2026 layak digunakan sebagai dasar perancangan solusi *Business Intelligence*. Kualitas data perlu diperhatikan karena format data lebar, cakupan provinsi yang tidak seragam terutama pada tingkat produsen, data yang sebagian sudah diimputasi oleh pengunggah, dan adanya 2.187 nilai ekstrem.
+2. Analisis kebutuhan informasi menghasilkan enam pertanyaan bisnis tentang perbandingan harga antarprovinsi, fluktuasi komoditas, tren bulanan, kenaikan harga menjelang Idulfitri, kesenjangan antarwilayah, dan selisih harga produsen–konsumen.
+3. Proses ETL dirancang untuk mengubah data berformat lebar menjadi 1.354.641 baris fakta dengan mengambil komoditas dan jenis pasar dari nama file, mengubah kolom tanggal menjadi tipe tanggal, serta menandai dan menangani nilai ekstrem sebelum data dimuat.
+4. *Data warehouse* dirancang dengan skema bintang pendekatan Kimball, terdiri atas tabel fakta `fact_harga_harian` pada grain harga per komoditas, jenis pasar, provinsi, dan tanggal, serta empat tabel dimensi. Grain ini memungkinkan analisis dari sudut pandang waktu, komoditas, jenis pasar, dan wilayah.
+5. Rancangan *dashboard* menyajikan setiap pertanyaan bisnis dalam satu visual, sehingga pengguna dapat mengidentifikasi provinsi dan komoditas dengan harga tertinggi atau paling fluktuatif, mengantisipasi kenaikan harga menjelang Idulfitri, dan melihat selisih harga dari produsen ke konsumen sebagai bahan pengambilan keputusan pengendalian harga.
+
+Pengembangan selanjutnya dapat berupa implementasi ETL dan *dashboard* secara nyata, verifikasi sampel data terhadap situs PIHPS, serta penambahan data pendukung seperti inflasi atau jumlah penduduk per provinsi dari BPS.
 
 ---
 
