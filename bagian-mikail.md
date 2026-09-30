@@ -7,12 +7,14 @@ Tanda `[PERLU DICEK]` = jangan dikumpulkan sebelum dihapus/diganti.
 
 ## COVER (isi yang kosong di Docs)
 
-- Judul: **Rancangan Data Warehouse dan Dashboard Business Intelligence Harga Pangan Strategis Indonesia Berbasis Data PIHPS**
+- Judul: **Rancangan Data Warehouse dan Dashboard Business Intelligence untuk Pemantauan Harga Pangan Strategis di 34 Provinsi Indonesia (Tingkat Produsen, Pasar Tradisional, dan Pasar Modern)**
+  - Versi pendek: *Rancangan Data Warehouse dan Dashboard Pemantauan Harga Pangan Strategis Indonesia*
 - Kelompok: 12
-- Dosen Pengampu: [PERLU DICEK]
+- Kelas: BI B
+- Dosen Pengampu: Hafizah Hanim, M.Kom
 - Oleh: Mikail — NIM [..] · Ikhsan — NIM [..] · Hanif — NIM [..]
 - Tahun: 2026
-- Nama file PDF: `[Kode Kelas]_12_Harga Pangan Strategis.pdf`
+- Nama file PDF: `BI B_12_Harga Pangan Strategis.pdf`
 
 ---
 
@@ -58,4 +60,4 @@ Urutkan abjad. Tambahkan referensi dari Ikhsan & Hanif **hanya** kalau ada URL-n
 
 - Bank Indonesia. (n.d.). *Pusat Informasi Harga Pangan Strategis Nasional (PIHPS Nasional)*. Diakses {{tanggal}}, dari https://www.bi.go.id/hargapangan
 - Kimball, R., & Ross, M. (2013). *The data warehouse toolkit: The definitive guide to dimensional modeling* (3rd ed.). Wiley.
-- muhyusuf1112. ({{tahun unggah, lihat halaman Kaggle}}). *Indonesia PIHPS food commodity prices dataset* [Data set]. Kaggle. https://www.kaggle.com/datasets/muhyusuf1112/indonesia-commodity-price-based-piphs-source
+- muhyusuf1112. (2026). *Indonesia PIHPS food commodity prices dataset* [Data set]. Kaggle. https://www.kaggle.com/datasets/muhyusuf1112/indonesia-commodity-price-based-piphs-source
